@@ -1,5 +1,7 @@
 package dev.id2r.api.common.utils;
 
+import java.util.concurrent.TimeUnit;
+
 public class StringUtils {
 
     public static String translateAlternateColorCodes(char altColorChar, String textToTranslate) {
@@ -30,13 +32,13 @@ public class StringUtils {
         StringBuilder builder = new StringBuilder();
 
         if (days > 0)
-            builder.append(days).append(" day(s)").append(" ");
+            builder.append(days).append(" day(s) ");
         if (hours > 0)
-            builder.append(hours).append(" hour(s)").append(" ");
+            builder.append(hours).append(" hour(s) ");
         if (minutes > 0)
-            builder.append(minutes).append(" minute(s)").append(" ");
+            builder.append(minutes).append(" minute(s) ");
 
-        builder.append(seconds).append(" second(s)").append(" ");
+        builder.append(seconds).append(" second(s) ");
 
         return builder.toString();
     }
