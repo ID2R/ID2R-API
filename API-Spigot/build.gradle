@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+}
+
+group 'dev.id2r'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+    maven {
+        name 'spigot-repo'
+        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+    implementation project(":API-Common")
+}
