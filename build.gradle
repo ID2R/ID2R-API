@@ -11,8 +11,10 @@ plugins {
 group 'dev.id2r'
 version '1.0.0'
 
-allprojects {
-    apply plugin: 'java-library'
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
 
     compileJava.options.encoding = "UTF-8"
     java {
@@ -31,4 +33,8 @@ allprojects {
         compileOnly 'org.projectlombok:lombok:1.18.22'
         annotationProcessor 'org.projectlombok:lombok:1.18.22'
     }
+
+    project.ext.major = '1'
+    project.ext.minor = '0'
+    project.ext.apiVer = project.ext.major + '.' + project.ext.minor
 }

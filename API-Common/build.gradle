@@ -4,8 +4,7 @@ plugins {
 }
 
 group 'dev.id2r'
-version '1.0.0'
-
+project.version = project.ext.apiVer
 
 repositories {
     mavenCentral()
@@ -25,3 +24,90 @@ dependencies {
     api 'org.agrona:agrona:1.14.0'
     api 'com.google.guava:guava:31.0.1-jre'
 }
+
+// not required in the main build, only on deployment.
+/*
+if (project.hasProperty("id2rsonatypeUser") && project.hasProperty("id2rsonatypePass")) {
+    apply plugin: 'signing'
+
+    javadoc {
+        title = 'ID2R API (v' + project.ext.apiVer + ')'
+        options.encoding = 'UTF-8'
+        options.charSet = 'UTF-8'
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier 'javadoc'
+        from javadoc.destinationDir
+    }
+    task sourcesJar(type: Jar) {
+        classifier 'sources'
+        from sourceSets.main.allSource
+    }
+
+    artifacts {
+        archives javadocJar
+        archives sourcesJar
+    }
+
+    publishing {
+        repositories {
+            maven {
+                def releasesRepoUrl = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+                def snapshotsRepoUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+                credentials {
+                    username id2rsonatypeUser
+                    password id2rsonatypePass
+                }
+            }
+        }
+
+        publications {
+            mavenJava (MavenPublication) {
+                from components.java
+                artifactId = 'api-common'
+                artifact sourcesJar
+                artifact javadocJar
+                pom {
+                    name = 'ID2R API'
+                    packaging = 'jar'
+                    description = 'ID2R API for all of our projects'
+                    url = 'https://id2r.dev'
+                    licenses {
+                        license {
+                            name = 'MIT'
+                            url = 'https://opensource.org/licenses/MIT'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'id2r'
+                            name = 'ID2R'
+                            url = 'https://id2r.dev'
+                            email = 'contact@id2r.dev'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:https://github.com/id2r/ID2R-API.git'
+                        developerConnection = 'scm:git:git@github.com:id2r/ID2R-API.git'
+                        url = 'https://github.com/ID2R/ID2R-API'
+                    }
+
+                    issueManagement {
+                        system = 'GitHub'
+                        url = 'https://github.com/ID2R/ID2R-API/issues'
+                    }
+                }
+            }
+        }
+    }
+
+    signing {
+        sign configurations.archives
+        sign publishing.publications.mavenJava
+        required = true
+    }
+
+}
+*/

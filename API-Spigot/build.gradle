@@ -3,17 +3,103 @@ plugins {
 }
 
 group 'dev.id2r'
-version '1.0.0'
+project.version = project.ext.apiVer
 
 repositories {
     mavenCentral()
     maven {
-        name 'spigot-repo'
-        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+        name 'nms-repo'
+        url 'https://repo.codemc.org/repository/nms/'
     }
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+    compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
     api project(":API-Common")
 }
+
+// not required in the main build, only on deployment.
+/*
+if (project.hasProperty("id2rsonatypeUser") && project.hasProperty("id2rsonatypePass")) {
+    apply plugin: 'signing'
+
+    javadoc {
+        title = 'ID2R API (v' + project.ext.apiVer + ')'
+        options.encoding = 'UTF-8'
+        options.charSet = 'UTF-8'
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier 'javadoc'
+        from javadoc.destinationDir
+    }
+    task sourcesJar(type: Jar) {
+        classifier 'sources'
+        from sourceSets.main.allSource
+    }
+
+    artifacts {
+        archives javadocJar
+        archives sourcesJar
+    }
+
+    publishing {
+        repositories {
+            maven {
+                def releasesRepoUrl = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+                def snapshotsRepoUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+                credentials {
+                    username id2rsonatypeUser
+                    password id2rsonatypePass
+                }
+            }
+        }
+
+        publications {
+            mavenJava (MavenPublication) {
+                from components.java
+                artifactId = 'api-spigot'
+                artifact sourcesJar
+                artifact javadocJar
+                pom {
+                    name = 'ID2R API'
+                    packaging = 'jar'
+                    description = 'ID2R API for all of our projects'
+                    url = 'https://id2r.dev'
+                    licenses {
+                        license {
+                            name = 'MIT'
+                            url = 'https://opensource.org/licenses/MIT'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'id2r'
+                            name = 'ID2R'
+                            url = 'https://id2r.dev'
+                            email = 'contact@id2r.dev'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:https://github.com/id2r/ID2R-API.git'
+                        developerConnection = 'scm:git:git@github.com:id2r/ID2R-API.git'
+                        url = 'https://github.com/ID2R/ID2R-API'
+                    }
+
+                    issueManagement {
+                        system = 'GitHub'
+                        url = 'https://github.com/ID2R/ID2R-API/issues'
+                    }
+                }
+            }
+        }
+    }
+
+    signing {
+        sign configurations.archives
+        sign publishing.publications.mavenJava
+        required = true
+    }
+
+}*/
