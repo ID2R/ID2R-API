@@ -12,8 +12,6 @@ group 'dev.id2r'
 version '1.0.0'
 
 subprojects {
-
-    apply plugin: 'java'
     apply plugin: 'maven-publish'
 
     compileJava.options.encoding = "UTF-8"
