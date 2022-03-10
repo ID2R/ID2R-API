@@ -1,6 +1,6 @@
 rootProject.name = 'ID2R-API'
-include 'API-Common'
-include 'API-Spigot'
-include 'API-Bungeecord'
-include 'API-Velocity'
+include 'api-common'
+include 'api-spigot'
+include 'api-bungeecord'
+include 'api-velocity'
 

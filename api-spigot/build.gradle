@@ -11,11 +11,14 @@ repositories {
         name 'nms-repo'
         url 'https://repo.codemc.org/repository/nms/'
     }
+    maven {
+        url = 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
-    api project(":API-Common")
+    compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+    api project(":api-common")
 }
 
 // not required in the main build, only on deployment.
