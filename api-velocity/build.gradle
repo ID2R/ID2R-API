@@ -19,7 +19,7 @@ dependencies {
 
     //noinspection GradlePackageUpdate
     compileOnly 'com.squareup.okhttp3:okhttp:3.14.9'
-    api(project(":API-Common"))
+    api(project(":api-common"))
 }
 
 // not required in the main build, only on deployment.

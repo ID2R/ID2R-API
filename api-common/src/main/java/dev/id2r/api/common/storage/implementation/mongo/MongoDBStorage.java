@@ -39,7 +39,7 @@ public class MongoDBStorage implements Storage {
     }
 
     @Override
-    public void shutdown() throws Exception {
+    public void shutdown() {
         if (this.client != null) {
             this.client.close();
         }
