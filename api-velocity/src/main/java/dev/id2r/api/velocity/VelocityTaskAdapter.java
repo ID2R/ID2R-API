@@ -19,7 +19,7 @@ public class VelocityTaskAdapter implements TaskFactory {
 
     public VelocityTaskAdapter(VelocityBootstrap bootstrap) {
         this.bootstrap = bootstrap;
-        this.executor = r -> bootstrap.getLoader().getScheduler().buildTask(bootstrap, r).schedule();
+        this.executor = r -> bootstrap.getServer().getScheduler().buildTask(bootstrap, r).schedule();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class VelocityTaskAdapter implements TaskFactory {
 
     @Override
     public SchedularTask repeatAsync(Runnable runnable, long interval, TimeUnit unit) {
-        ScheduledTask t = this.bootstrap.getLoader().getScheduler().buildTask(this.bootstrap.getLoader(), runnable)
+        ScheduledTask t = this.bootstrap.getServer().getScheduler().buildTask(this.bootstrap.getServer(), runnable)
                 .delay(interval, unit)
                 .repeat(interval, unit)
                 .schedule();
@@ -44,7 +44,7 @@ public class VelocityTaskAdapter implements TaskFactory {
 
     @Override
     public SchedularTask delayAsync(Runnable runnable, long delay, TimeUnit unit) {
-        ScheduledTask t = this.bootstrap.getLoader().getScheduler().buildTask(this.bootstrap.getLoader(), runnable)
+        ScheduledTask t = this.bootstrap.getServer().getScheduler().buildTask(this.bootstrap.getServer(), runnable)
                 .delay(delay, unit)
                 .schedule();
         this.tasks.add(t);

@@ -27,7 +27,7 @@ public class SpigotBootstrap implements ID2RPluginBootstrap, LoaderBootstrap {
 
     private Instant startTime;
 
-    public SpigotBootstrap(Plugin loader, SpigotPlugin plugin) {
+    public <T extends SpigotPlugin> SpigotBootstrap(Plugin loader, T plugin) {
         this.loader = loader;
         this.plugin = plugin;
         this.taskAdapter = new SpigotTaskAdapter(this);
@@ -51,7 +51,7 @@ public class SpigotBootstrap implements ID2RPluginBootstrap, LoaderBootstrap {
 
     @Override
     public void enable() {
-        this.plugin.onEnable();
+        this.plugin.enable();
     }
 
     @Override

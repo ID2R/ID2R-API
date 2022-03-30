@@ -13,17 +13,17 @@ public interface ID2RPlugin {
     /**
      * method to be called on load
      */
-    void onLoad();
+    default void load() {}
 
     /**
      * method to be called when the plugin enables.
      */
-    void onEnable();
+    void enable();
 
     /**
      * method to be called when the plugin disables.
      */
-    void onDisable();
+    void disable();
 
     /**
      * Dynamic Dependency manager

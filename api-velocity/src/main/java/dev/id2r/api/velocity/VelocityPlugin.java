@@ -1,16 +1,21 @@
 package dev.id2r.api.velocity;
 
+import com.velocitypowered.api.plugin.annotation.DataDirectory;
+import com.velocitypowered.api.proxy.ProxyServer;
 import dev.id2r.api.common.plugin.ID2RPlugin;
 import dev.id2r.api.common.plugin.bootstrap.ID2RPluginBootstrap;
+import org.slf4j.Logger;
+
+import java.nio.file.Path;
 
 public abstract class VelocityPlugin implements ID2RPlugin {
 
-    private final ID2RPluginBootstrap bootstrap;
+    private final VelocityBootstrap bootstrap;
     private final VelocityDependencyManager dependencyManager;
 
-    public VelocityPlugin(VelocityBootstrap bootstrap) {
-        this.bootstrap = bootstrap;
-        this.dependencyManager = new VelocityDependencyManager(bootstrap);
+    public VelocityPlugin(Logger logger, ProxyServer server, @DataDirectory Path data) {
+        this.bootstrap = new VelocityBootstrap(server, logger, data, this);
+        this.dependencyManager = new VelocityDependencyManager(this.bootstrap);
     }
 
     @Override
@@ -19,7 +24,7 @@ public abstract class VelocityPlugin implements ID2RPlugin {
     }
 
     @Override
-    public ID2RPluginBootstrap getBootstrap() {
+    public VelocityBootstrap getBootstrap() {
         return bootstrap;
     }
 
