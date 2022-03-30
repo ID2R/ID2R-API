@@ -16,7 +16,7 @@ Some of the features that this library delivers:
    - Injects libraries at runtime.
    - Eliminates the need for shading libraries that results in big jars (5MB+).
    - Downloads required dependencies at runtime.
-   - Does a SHA256 check at runtime to protect against possible imposter jars.
+   - Does a SHA256 check at runtime to protect against possible impostor jars.
    - Has the ability to do a relocation at runtime (thanks to lucko's library [jar-relocator](https://github.com/lucko/jar-relocator)).
    - Isolated class loader support.
    - Downloads from any repository (maven, sonatype, jitpack, etc..)
