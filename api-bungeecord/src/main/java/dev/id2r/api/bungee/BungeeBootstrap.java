@@ -45,17 +45,17 @@ public class BungeeBootstrap implements ID2RPluginBootstrap, LoaderBootstrap {
         this.logger = new JUtilPluginLogger(this.loader.getLogger());
 
         this.startTime = Instant.now();
-        this.plugin.onLoad();
+        this.plugin.load();
     }
 
     @Override
     public void enable() {
-        this.plugin.onEnable();
+        this.plugin.enable();
     }
 
     @Override
     public void disable() {
-        this.plugin.onDisable();
+        this.plugin.disable();
     }
 
     @Override

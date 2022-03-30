@@ -15,6 +15,6 @@ public class VelocityDependencyManager extends DependencyManager {
 
     @Override
     protected void addToClasspath(Path file) {
-        bootstrap.getLoader().getPluginManager().addToClasspath(this.bootstrap, file);
+        bootstrap.getServer().getPluginManager().addToClasspath(this.bootstrap, file);
     }
 }

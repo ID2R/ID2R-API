@@ -51,7 +51,7 @@ public class SpigotBootstrap implements ID2RPluginBootstrap, LoaderBootstrap {
 
     @Override
     public void enable() {
-        this.plugin.onEnable();
+        this.plugin.enable();
     }
 
     @Override

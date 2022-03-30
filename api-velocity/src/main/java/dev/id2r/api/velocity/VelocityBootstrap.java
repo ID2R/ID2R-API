@@ -1,11 +1,9 @@
 package dev.id2r.api.velocity;
 
-import com.google.inject.Inject;
 import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
-import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import dev.id2r.api.common.platform.Platform;
@@ -29,15 +27,12 @@ public class VelocityBootstrap implements ID2RPluginBootstrap {
 
     private Instant startTime;
 
-    @Inject
-    private ProxyServer server;
+    private final ProxyServer server;
+    private final Path configDirectory;
 
-    @Inject
-    @DataDirectory
-    private Path configDirectory;
-
-    @Inject
-    public VelocityBootstrap(Logger logger, VelocityPlugin plugin) {
+    public VelocityBootstrap(ProxyServer server, Logger logger, Path configDirectory, VelocityPlugin plugin) {
+        this.server = server;
+        this.configDirectory = configDirectory;
         this.logger = new SLF4JPluginLogger(logger);
         this.taskAdapter = new VelocityTaskAdapter(this);
         this.plugin = plugin;
@@ -46,16 +41,16 @@ public class VelocityBootstrap implements ID2RPluginBootstrap {
     @Subscribe(order = PostOrder.FIRST)
     public void onEnable(ProxyInitializeEvent e) {
         this.startTime = Instant.now();
-        this.plugin.onLoad();
-        this.plugin.onEnable();
+        this.plugin.load();
+        this.plugin.enable();
     }
 
     @Subscribe(order = PostOrder.LAST)
     public void onDisable(ProxyShutdownEvent e) {
-        this.plugin.onDisable();
+        this.plugin.disable();
     }
 
-    public ProxyServer getLoader() {
+    public ProxyServer getServer() {
         return server;
     }
 
@@ -71,7 +66,7 @@ public class VelocityBootstrap implements ID2RPluginBootstrap {
 
     @Override
     public String getVersion() {
-        return getLoader().getVersion().getVersion();
+        return getServer().getVersion().getVersion();
     }
 
     @Override
@@ -91,12 +86,12 @@ public class VelocityBootstrap implements ID2RPluginBootstrap {
 
     @Override
     public int getPlayerCount() {
-        return this.getLoader().getPlayerCount();
+        return this.getServer().getPlayerCount();
     }
 
     @Override
     public Collection<String> getPlayerList() {
-        Collection<Player> players = this.getLoader().getAllPlayers();
+        Collection<Player> players = this.getServer().getAllPlayers();
         List<String> list = new ArrayList<>(players.size());
         for (Player player : players)
             list.add(player.getUsername());
@@ -105,7 +100,7 @@ public class VelocityBootstrap implements ID2RPluginBootstrap {
 
     @Override
     public Collection<UUID> getOnlinePlayers() {
-        Collection<Player> players = this.getLoader().getAllPlayers();
+        Collection<Player> players = this.getServer().getAllPlayers();
         List<UUID> list = new ArrayList<>(players.size());
         for (Player player : players)
             list.add(player.getUniqueId());
@@ -114,7 +109,7 @@ public class VelocityBootstrap implements ID2RPluginBootstrap {
 
     @Override
     public boolean isPlayerOnline(UUID uniqueId) {
-        Player player = this.getLoader().getPlayer(uniqueId).orElse(null);
+        Player player = this.getServer().getPlayer(uniqueId).orElse(null);
         return player != null && player.isActive();
     }
 
