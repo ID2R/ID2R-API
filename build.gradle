@@ -34,6 +34,6 @@ subprojects {
     }
 
     project.ext.major = '1'
-    project.ext.minor = '2'
+    project.ext.minor = '3'
     project.ext.apiVer = project.ext.major + '.' + project.ext.minor
 }
