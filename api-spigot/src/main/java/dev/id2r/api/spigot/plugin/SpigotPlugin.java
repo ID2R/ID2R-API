@@ -5,13 +5,18 @@ import dev.id2r.api.common.plugin.ID2RPlugin;
 import dev.id2r.api.common.plugin.bootstrap.ID2RPluginBootstrap;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Optional;
+
 public abstract class SpigotPlugin extends JavaPlugin implements ID2RPlugin {
 
     private final SpigotBootstrap bootstrap;
-    private final DependencyManager dependencyManager;
+    private DependencyManager dependencyManager;
 
     public SpigotPlugin() {
         this.bootstrap = new SpigotBootstrap(this, this);
+    }
+
+    public final void enableDependencyManager() {
         this.dependencyManager = new SpigotDependencyManager(this.bootstrap);
     }
 
@@ -36,7 +41,7 @@ public abstract class SpigotPlugin extends JavaPlugin implements ID2RPlugin {
     }
 
     @Override
-    public DependencyManager getDependencyManager() {
-        return this.dependencyManager;
+    public Optional<DependencyManager> getDependencyManager() {
+        return Optional.ofNullable(this.dependencyManager);
     }
 }

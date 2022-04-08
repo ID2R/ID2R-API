@@ -4,6 +4,8 @@ import dev.id2r.api.common.dependency.DependencyManager;
 import dev.id2r.api.common.plugin.ID2RPlugin;
 import net.md_5.bungee.api.plugin.Plugin;
 
+import java.util.Optional;
+
 /**
  * Class to extend to use load your needs.
  *
@@ -13,10 +15,13 @@ public abstract class BungeePlugin extends Plugin implements ID2RPlugin {
 
     private final BungeeBootstrap bootstrap;
 
-    private final BungeeDependencyManager dependencyManager;
+    private BungeeDependencyManager dependencyManager;
 
     public BungeePlugin() {
         this.bootstrap = new BungeeBootstrap(this, this);
+    }
+
+    public final void enableDependencyManager() {
         this.dependencyManager = new BungeeDependencyManager(bootstrap);
     }
 
@@ -41,8 +46,8 @@ public abstract class BungeePlugin extends Plugin implements ID2RPlugin {
     }
 
     @Override
-    public DependencyManager getDependencyManager() {
-        return this.dependencyManager;
+    public Optional<DependencyManager> getDependencyManager() {
+        return Optional.ofNullable(this.dependencyManager);
     }
 
 }
